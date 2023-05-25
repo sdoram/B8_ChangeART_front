@@ -25,7 +25,18 @@ async function injectNavbar() {
     articleCreateLink.innerHTML = "글 작성";
 
     articleCreateLi.appendChild(articleCreateLink);
+
+    let imageCreateLi = document.createElement("li");
+    imageCreateLi.setAttribute("class", "nav-item");
+
+    let imageChangeLink = document.createElement("a");
+    imageChangeLink.setAttribute("href", "../doc/change.html");
+    imageChangeLink.setAttribute("class", "nav-link");
+    imageChangeLink.innerHTML = "이미지 변환";
+
+    imageCreateLi.appendChild(imageChangeLink);
     navbarLeft.appendChild(articleCreateLi);
+    navbarLeft.appendChild(imageCreateLi);
 
     let navbarRight = document.getElementById("navbar-right");
     let newLi = document.createElement("li");
