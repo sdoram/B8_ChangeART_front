@@ -15,6 +15,7 @@ async function injectNavbar() {
     const intro = document.getElementById("intro");
     intro.innerText = `${payload_parse.nickname}님 안녕하세요`;
 
+    // 내비바 왼쪽 항목
     let navbarLeft = document.getElementById("navbar-left");
     let articleCreateLi = document.createElement("li");
     articleCreateLi.setAttribute("class", "nav-item");
@@ -38,21 +39,26 @@ async function injectNavbar() {
     navbarLeft.appendChild(articleCreateLi);
     navbarLeft.appendChild(imageCreateLi);
 
+    // 내비바 오른쪽 항목
     let navbarRight = document.getElementById("navbar-right");
-    let newLi = document.createElement("li");
-    newLi.setAttribute("class", "nav-item");
-
     let logoutBtn = document.createElement("button");
     logoutBtn.setAttribute("class", "nav-link btn");
     logoutBtn.innerText = "로그아웃";
     logoutBtn.setAttribute("onClick", "handleLogout()");
 
-    newLi.appendChild(logoutBtn);
+    let myPageBtn = document.createElement("button");
+    myPageBtn.setAttribute("class", "nav-link btn");
+    myPageBtn.innerText = "내 정보";
+    myPageBtn.setAttribute("onclick", "handleMyPage()");
 
-    navbarRight.appendChild(newLi);
+    navbarRight.appendChild(myPageBtn);
+    navbarRight.appendChild(logoutBtn);
 
+    // payload 존재시 숨길 항목
     let loginButton = document.getElementById("login-button");
+    let SignupButton = document.getElementById("signup-button");
     loginButton.style.display = "none";
+    SignupButton.style.display = "none";
   }
 }
 
