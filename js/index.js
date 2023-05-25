@@ -4,9 +4,6 @@ console.log('메인 페이지 연결')
 // 게시글 리스트 불러오기 
 async function getArticles() {
     const response = await fetch(`${backend_base_url}/home/`, {
-        headers: {
-            "Authorization": "Bearer " + token
-        },
     })
     if (response.status == 200) {
         const response_json = await response.json()
@@ -70,4 +67,20 @@ window.onload = async function loadArticles() {
         article_list.appendChild(newCol)
     }
     )
+}
+
+// 로그인 여부에 따라 로그인 페이지 or 글작성 페이지
+function handleMoveCreate() {
+    if (payload) {
+        window.location.href = `${frontend_base_url}/doc/create.html`
+    } else {
+        window.location.href = `${frontend_base_url}/doc/login.html`
+    }
+    console.log('게시글 작성 이동 버튼')
+}
+
+// 이미지 변환 페이지 이동 
+function handleMoveChange() {
+    console.log('이미지 변환 이동 버튼')
+    window.location.href = `${frontend_base_url}/doc/change.html`
 }
