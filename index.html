@@ -22,6 +22,8 @@
     <header></header>
     <div class="container">
         <h1>메인페이지</h1>
+        <p>정렬버튼 우측 정렬, 페이지 가운데 정렬하기</p>
+        <p>이미지 최대 크기 지정하기</p>
         <button type="button" onclick="handleMoveCreate()" class="btn btn-outline-secondary">글쓰기</button>
         <button type="button" onclick="handleMoveChange()" class="btn btn-outline-secondary">이미지 변환</button>
         <div class="dropdown">
@@ -41,12 +43,14 @@
             <div class="row row-cols-1 row-cols-md-3 g-4" id="article-list"></div>
         </div>
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <ul class="pagination" id="pagination-button">
+                <li class="page-item"><button type="button" class="page-link" onclick="previousPage()">Previous</ㅠ>
+                </li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item"><button type="bu
+                    " class="page-link" onclick="nextPage()">Next</button></li>
             </ul>
         </nav>
     </div>
