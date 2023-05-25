@@ -7,11 +7,11 @@ async function getArticles() {
     })
     if (response.status == 200) {
         const response_json = await response.json()
-        return response_json
+        console.log(response_json)
+        return response_json.results
     } else {
         alert('게시글 로딩 실패')
     }
-    console.log(response)
 }
 
 // 상세 게시글 이동
@@ -26,7 +26,9 @@ window.onload = async function loadArticles() {
     console.log(articles)
     const article_list = document.getElementById("article-list")
 
+    // Array.from(articles).forEach(article => {
     articles.forEach(article => {
+        console.log(articles, article)
         const newCol = document.createElement("div");
         newCol.setAttribute("class", "col");
         newCol.setAttribute("onclick", `articleDetail(${article.id})`)
@@ -41,28 +43,9 @@ window.onload = async function loadArticles() {
         if (article.image) {
             articleImage.setAttribute("src", `${backend_base_url}${article.image.image} `)
         } else {
-            articleImage.setAttribute("src", "https://github.com/sdoram/sdoram/assets/108051577/68aa56dc-3605-4f70-a8b7-044109871a38")
+            articleImage.setAttribute("src", `${noImage}`)
         }
         newCard.appendChild(articleImage)
-
-        const newCardBody = document.createElement("div")
-        newCardBody.setAttribute("class", "card-body")
-        newCard.appendChild(newCardBody)
-        // 게시글 제목
-        const newCardTitle = document.createElement("h5")
-        newCardTitle.setAttribute("class", "card-title")
-        newCardTitle.innerText = article.title
-        newCardBody.appendChild(newCardTitle)
-        // 게시글 작성자
-        const newCardAuth = document.createElement("h6")
-        newCardAuth.setAttribute("class", "card-auth")
-        newCardAuth.innerText = article.user
-        newCardBody.appendChild(newCardAuth)
-        // 게시글 수정시간
-        // const newCardUpdated = document.createElement("h6")
-        // newCardUpdated.setAttribute("class", "card-Updated")
-        // newCardUpdated.innerText = article.updated_at
-        // newCardBody.appendChild(newCardUpdated)
 
         article_list.appendChild(newCol)
     }
