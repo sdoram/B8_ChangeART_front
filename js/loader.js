@@ -10,10 +10,9 @@ async function injectNavbar() {
   let data = await navbarHtml.text();
   document.querySelector("header").innerHTML = data;
   if (payload) {
-    console.log(payload_parse.nickname);
 
     const intro = document.getElementById("intro");
-    intro.innerText = `${payload_parse.nickname}님 안녕하세요`;
+    intro.innerText = `${payload_parse.nickname}님`;
 
     // 내비바 왼쪽 항목
     let navbarLeft = document.getElementById("navbar-left");
@@ -46,12 +45,12 @@ async function injectNavbar() {
     logoutBtn.innerText = "로그아웃";
     logoutBtn.setAttribute("onClick", "handleLogout()");
 
-    let myPageBtn = document.createElement("button");
-    myPageBtn.setAttribute("class", "nav-link btn");
-    myPageBtn.innerText = "내 정보";
-    myPageBtn.setAttribute("onclick", "handleMyPage()");
+    let myPageLink = document.createElement("a");
+    myPageLink.setAttribute("class", "nav-link btn");
+    myPageLink.innerText = "내 정보";
+    myPageLink.setAttribute("href", "../doc/mypage.html");
 
-    navbarRight.appendChild(myPageBtn);
+    navbarRight.appendChild(myPageLink);
     navbarRight.appendChild(logoutBtn);
 
     // payload 존재시 숨길 항목
