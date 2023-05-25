@@ -6,6 +6,8 @@ const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const token = localStorage.getItem("access");
 
+const noImage = "https://github.com/sdoram/sdoram/assets/108051577/68aa56dc-3605-4f70-a8b7-044109871a38"
+
 
 function checkLogin() {
     console.log('로그인 js 연결 체크')
