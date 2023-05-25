@@ -1,6 +1,3 @@
-window.onload = () => {
-    console.log('로그인 js 연결 체크')
-}
 async function handleLogin() {
     console.log('로그인 버튼');
     const email = document.getElementById('email').value;
@@ -30,12 +27,12 @@ async function handleLogin() {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
     localStorage.setItem("payload", jsonPayload);
-
+    if (response.status == 200) {
+        alert('로그인 성공')
+        window.location.replace(`${frontend_base_url}/`);
+    } else {
+        alert(response.status)
+    }
 }
 
-// 로그아웃 
-async function handleLogout() {
-    localStorage.removeItem("access")
-    localStorage.removeItem("refresh")
-    localStorage.removeItem("payload")
-}
+checkLogin()
