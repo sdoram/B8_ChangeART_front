@@ -27,8 +27,12 @@
         <div class="row row-cols-1 row-cols-mb-2" id="article">
             <div class="col" id="article-image"></div>
             <div class="col" id="article-content"></div>
+            <div class="col" id="article-like-count"></div>
+            <div class="card text-center" style="border:none">
+                <a href="#" onclick="like()" style="text-decoration: none; font-size: 30px;">💗</a>
+            </div>
             <div id="more-options">
-                <button type="button" id="update_button" class="btn btn-primary mr-2" onclick="updateMode()">수정</button>
+                <button type="button" id="update_button" class="btn btn-primary mr-2" onclick="updatePage()">수정</button>
                 <button type="button" id="delete_button" class="btn btn-danger" onclick="removeArticle()">삭제</button>
             </div>
         </div>
@@ -41,9 +45,10 @@
                         <button type="button" class="btn btn-success" onclick="submitComment()">등록</button>
                     </div>
             </form>
+
             <ul id="comment-list" class="list-group comment-list">
-                <!-- 댓글 목록은 동적으로 생성 -->
             </ul>
+
 </body>
 
 </html>
