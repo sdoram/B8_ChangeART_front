@@ -6,7 +6,7 @@ async function handleLogin() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     console.log(email, password);
-    const response = await fetch('http://127.0.0.1:8000/users/login/', {
+    const response = await fetch(`${backend_base_url}/users/login/`, {
         headers: {
             'content-type': 'application/json',
         },
@@ -32,7 +32,6 @@ async function handleLogin() {
     localStorage.setItem("payload", jsonPayload);
 
 }
-
 
 // 로그아웃 
 async function handleLogout() {
