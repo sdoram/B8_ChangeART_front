@@ -13,9 +13,17 @@
 </head>
 
 <body>
-    <h1>
-        회원가입
-    </h1>
+    <h1>Sign Up</h1>
+    <form>
+        <form>
+            <input id="email" name="email" placeholder="Email" type="email"/>
+            <button type="button" onclick="handleSendmail()">이메일인증</button>
+        </form>
+        <input id="verify_code" name="verify_code" placeholder="Code" type="text"/>
+        <input id="nickname" name="name" placeholder="Nickname" type="name"/>
+        <input id="password" name="password" placeholder="Password" type="password"/>
+        <button type="button" onclick="handleSignup()">Signup</button>
+    </form>
 </body>
 
 </html>
