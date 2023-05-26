@@ -30,7 +30,8 @@ async function loadArticles(article_id) {
     const authorId = response.user_id
     const currentUser = payload ? JSON.parse(payload).user_id : undefined;
 
-    console.log(response)
+    console.log(currentUser)
+    console.log(authorId)
 
     const articleTitle = document.getElementById("article-title")
     const articleAuthor = document.getElementById("article-author")
@@ -56,6 +57,8 @@ async function loadArticles(article_id) {
 
     articleTitle.innerText = response.title
     articleAuthor.innerText = response.user
+    articleAuthor.setAttribute("onclick", `moveMyPage(${authorId})`)
+
     articleCreatedAt.innerText = formattedTime
     articleContent.innerText = response.content
     articleLikeCount.innerText = "좋아요: " + response.like_count
@@ -80,6 +83,12 @@ async function loadArticles(article_id) {
         document.getElementById("update_button").style.display = "none";
         document.getElementById("delete_button").style.display = "none";
     }
+}
+
+// 게시글 작성자 이름 눌러서 작성자의 마이페이지로 이동하는 함수
+async function moveMyPage(user_id) {
+    window.location.href = `${frontend_base_url}/doc/mypage.html?user_id=${user_id}`
+
 }
 
 // 좋아요
@@ -150,8 +159,8 @@ async function loadComments(article_id) {
         commentsList.innerHTML += `
         <li class="media d-flex mt-3 mb-3">
             <img class="mr-3" src="" alt="프로필" width="50" height="50">
-            <div class="media-body" style="max-width: 400px; min-width: 400px;">
-                <h5 class="mt-0 mb-1">${comment.nickname}</h5>
+            <div class="media-body" style="max-width: 60%; min-width: 60%;">
+                <h5 class="mt-0 mb-1" style="cursor:pointer;" onclick="moveMyPage(${comment.user_id})">${comment.nickname}</h5>
                 <div>
                 <p id="${comment.id}" class="comment-content" style="padding: 10px;">${comment.content}</p> 
                 </div>

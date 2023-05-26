@@ -13,7 +13,9 @@ function articleDetail(article_id) {
 }
 
 window.onload = async function getUser() {
-    const response = await fetch(`${backend_base_url}/users/mypage/${payload_parse.user_id}`, {
+    const urlParams = new URLSearchParams(window.location.search);
+    user_id = urlParams.get('user_id');
+    const response = await fetch(`${backend_base_url}/users/mypage/${user_id}`, {
     })
     if (response.status == 200) {
         const response_json = await response.json()
@@ -43,7 +45,7 @@ window.onload = async function getUser() {
         const userFollowingList = document.getElementById('user_following_list')
         userFollowersCount.innerText = response_json.followers_count
         userFollowingCount.innerText = response_json.following_count
-        
+
         response_json.following_list.forEach(user_following => {
             console.log(user_following)
             // 페이지 이동
@@ -64,7 +66,7 @@ window.onload = async function getUser() {
 
             // 유저 프로필이미지
             const userImage = document.createElement("img")
-            userImage.setAttribute("class","card-img-top")
+            userImage.setAttribute("class", "card-img-top")
             if (userImage.image) {
                 userImage.setAttribute("src", `${backend_base_url}${user_following.profile_image}`)
             } else {
@@ -94,7 +96,7 @@ window.onload = async function getUser() {
             newCol.appendChild(newCard)
 
             const articleImage = document.createElement("img")
-            articleImage.setAttribute("class","card-img-top")
+            articleImage.setAttribute("class", "card-img-top")
             if (article.image) {
                 articleImage.setAttribute("src", `${backend_base_url}${article.image}`)
             } else {
@@ -121,7 +123,7 @@ async function myPageFixing(user_id) {
 async function onClickFollowing() {
     const response = await fetch(`${backend_base_url}/users/${JSON.parse(payload).user_id}/`, {
         headers: {
-            "Authorization": `Bearer ${token}` 
+            "Authorization": `Bearer ${token}`
         },
         method: 'POST'
     })

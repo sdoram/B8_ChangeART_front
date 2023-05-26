@@ -27,7 +27,7 @@
     </h1>
     <div class="container text-center">
         <h1 id="article-title"></h1>
-        <h5 id="article-author" style="display: inline;">작성자</h5>
+        <h5 id="article-author" style="display: inline;  cursor:pointer;">작성자</h5>
         <h5 id="article-created-at" style="display: inline;">생성시간</h5>
         <div class="row row-cols-1 row-cols-mb-2" id="article">
             <div class="col" id="article-image"></div>
@@ -43,7 +43,7 @@
         </div>
         <div class="form-container mt-5">
             <form id="comment-form" class="comment-form" onsubmit="submitComment(); return false;">
-                <div class="form-group">
+                <div class="form-group mb-5">
                     <div class="form-group d-flex justify-content-center">
                         <input type="text" class="form-control" id="new-comment" name="comment"
                             placeholder="댓글을 작성해주세요">
