@@ -22,12 +22,27 @@
 <body>
     <header></header>
     <h1>마이페이지</h1>
-    <div class="col" id="user-id"></div>
+    <!-- <div class="col" id="user-id"></div> -->
     <div class="col" id="user-nickname"></div>
     <div class="col" id="user-email"></div>
-    <div class="col" id="user-password"></div>
+    <!-- <div class="col" id="user-password"></div> -->
     <div class="col profile-img" id="user-profile-image"></div>
-    <div class="col" id="user-articles"></div>
+    <div class="row">
+        <p>following</p>
+        <p id="user-following-count"></p>
+    </div>
+    <div class="row">
+        <p>followers</p>
+        <p id="user-followers-count"></p>
+    </div>
+    <button id="follow" onclick="onClickFollowing()" class="button">팔로우하기</button>
+    <button id="user_info_fixing" onclick="myPageFixing()" class="button">내 정보 수정하기</button>
+    <div>
+        <div class="row" id="user_following_list"></div>
+    </div>
+    <div>
+        <div class="row" id="user_article_list"></div>
+    </div>
 </body>
 
 </html>
