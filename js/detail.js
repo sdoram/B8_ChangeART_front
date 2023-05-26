@@ -171,7 +171,7 @@ async function postComment(article_id, newComment) {
         alert(response.status)
     }
 }
-// 댓글 수정 인풋으로! crud 기초강의 참고 
+// 댓글 수정모드
 async function handleEditComment(comment_id) {
     const thisComment = document.getElementById(comment_id).parentNode
     thisComment.style.visibility = "hidden";
@@ -185,7 +185,6 @@ async function handleEditComment(comment_id) {
     // 수정버튼을 한 번 눌렀을 때 onclick 속성을 handleUpdateConfirm으로 변경
     const update_button = document.getElementById(`edit-button-${comment_id}`)
     update_button.setAttribute("onclick", `handleUpdateConfirm(${comment_id})`)
-    console.log(update_button)
 }
 
 // 댓글 수정 api
