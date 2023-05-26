@@ -1,16 +1,5 @@
 console.log('마이페이지 연결 확인')
 
-// 프로필사진을 누르면 해당 유저의 페이지로 이동
-function authorMyPage(user_id) {
-    console.log(user_id)
-    window.location.href = `${frontend_base_url}/doc/mypage.html?user_id=${user_id}`
-}
-
-// 상세페이지로 이동
-function articleDetail(article_id) {
-    console.log(article_id)
-    window.location.href = `${frontend_base_url}/doc/detail.html?article_id=${article_id}`
-}
 
 window.onload = async function getUser() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -106,14 +95,38 @@ window.onload = async function getUser() {
 
             userArticles.appendChild(newCol)
         })
+
+        let authorId = `${user_id}`
+        const currentUser = payload ? JSON.parse(payload).user_id : undefined;
+        console.log(authorId)
+        console.log(currentUser)
+
+        if (currentUser && authorId == currentUser) {
+            document.getElementById("follow").style.display = "none";
+        } else {
+            document.getElementById("user_info_fixing").style.display = "none";
+        }
+
         return response_json
     } else {
         alert(response.status)
     }
 }
 
+// 프로필사진을 누르면 해당 유저의 페이지로 이동
+function authorMyPage(user_id) {
+    console.log(user_id)
+    window.location.href = `${frontend_base_url}/doc/mypage.html?user_id=${user_id}`
+}
+
+// 상세페이지로 이동
+function articleDetail(article_id) {
+    console.log(article_id)
+    window.location.href = `${frontend_base_url}/doc/detail.html?article_id=${article_id}`
+}
+
 // 유저 정보 수정페이지로 이동
-async function myPageFixing(user_id) {
+async function myPageFixing() {
     console.log(user_id)
     window.location.href = `${frontend_base_url}/doc/mypagefix.html?user_id=${user_id}`
 }
@@ -129,11 +142,10 @@ async function onClickFollowing() {
     })
     console.log(response)
     if (response.status == 200) {
-        alert("팔로우 하셨습니다")
+        response_json = await response.json()
+        alert(response_json.message)
         location.reload()
-
-    } else if (response.status == 202) {
-        alert("팔로우를 취소하셨습니다")
-        location.reload()
+    } else {
+        console.log(response.status)
     }
 }
