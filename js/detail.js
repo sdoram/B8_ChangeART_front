@@ -17,13 +17,6 @@ async function getArticle(article_id) {
     }
 }
 
-// 메인페이지에서 게시글 클릭하면 상세페이지로 이동하는 함수
-function articleDetail(article_id) {
-    window.location.href = `${frontend_base_url}/doc/detail.html?article_id=${article_id}`
-}
-
-// http://127.0.0.1:5500/doc/detail.html?article_id=12
-
 // 게시글 수정페이지로 이동
 function updatePage() {
     window.location.href = `detailupdate.html?article_id=${article_id}`
@@ -76,9 +69,9 @@ async function loadArticles(article_id) {
         const commentButton = comment.user_id === currentUser
             // 작성자가 본인일 때 옵션 보여주기
             ? `
-            <button type="button" class="btn btn-outline-info" data-comment-id="${comment.id}" onclick="handleEditComment(${comment.id})">수정</button>
+            <button type="button" class="btn btn-outline-info" id="edit-button-${comment.id}" onclick="handleEditComment(${comment.id})">수정</button>
 
-            <button type="button" class="btn btn-outline-danger" data-comment-id="${comment.id}" onclick="removeComment(${comment.id})">삭제</button>
+            <button type="button" class="btn btn-outline-danger" id="delete-button-${comment.id}" onclick="removeComment(${comment.id})">삭제</button>
             `
             : '';
 
@@ -86,9 +79,11 @@ async function loadArticles(article_id) {
         <li class="media d-flex mb-3">
             <img class="mr-3" src="" alt="프로필 이미지" width="50" height="50">
             <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.nickname}</h5>
-            ${comment.content}
-            ${commentButton}
+                <h5 class="mt-0 mb-1">${comment.nickname}</h5>
+                <div>
+                <p id="${comment.id}" class="comment-content">${comment.content}</p> 
+                </div>
+                <p>${commentButton}</p>
             </div>
         </li>
         `
@@ -170,6 +165,7 @@ async function postComment(article_id, newComment) {
     )
     if (response.status == 200) {
         response_json = await response.json()
+        alert("댓글을 작성했습니다.")
         return response_json
     } else {
         alert(response.status)
@@ -177,11 +173,26 @@ async function postComment(article_id, newComment) {
 }
 // 댓글 수정 인풋으로! crud 기초강의 참고 
 async function handleEditComment(comment_id) {
+    const thisComment = document.getElementById(comment_id).parentNode
+    thisComment.style.visibility = "hidden";
 
+    const updateInput = document.createElement("input")
+    updateInput.setAttribute("id", "update-input")
+    updateInput.setAttribute("value", thisComment.textContent.trim());
+
+    thisComment.parentNode.insertBefore(updateInput, thisComment)
+
+    // 수정버튼을 한 번 눌렀을 때 onclick 속성을 handleUpdateConfirm으로 변경
+    const update_button = document.getElementById(`edit-button-${comment_id}`)
+    update_button.setAttribute("onclick", `handleUpdateConfirm(${comment_id})`)
+    console.log(update_button)
 }
 
 // 댓글 수정 api
-async function updateComment(comment_id) {
+async function handleUpdateConfirm(comment_id) {
+
+    const updateInput = document.getElementById('update-input')
+    const updateComment = updateInput.value.trim()
 
     let token = localStorage.getItem("access")
 
@@ -189,13 +200,21 @@ async function updateComment(comment_id) {
         {
             method: 'PUT',
             headers: {
+                "content-type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-        })
+            body: JSON.stringify({
+                "content": updateComment,
+            })
+        }
+    )
     if (response.status == 200) {
+        alert("댓글이 수정되었습니다.")
     } else {
         alert(response.status)
     }
+
+    window.location.reload();
 }
 
 
