@@ -33,14 +33,8 @@ async function createArticle() {
     if (response.status == 200) {
         alert("작성완료")
         window.location.replace(`${frontend_base_url}/index.html`);
+        // article_id로 이동... 생성하자마자??
     } else {
         alert(response.status)
     }
 }
-
-function showFileName() {
-    const input = document.getElementById("image");
-    const fileName = document.getElementById("file-name");
-    fileName.textContent = input.files.name;
-}
-

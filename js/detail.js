@@ -2,6 +2,7 @@ window.onload = async function () {
     const urlParams = new URLSearchParams(window.location.search);
     article_id = urlParams.get('article_id');
     loadArticles(article_id);
+    loadComments(article_id);
 }
 
 // 게시글 상세보기 api
@@ -26,17 +27,36 @@ function updatePage() {
 async function loadArticles(article_id) {
     const response = await getArticle(article_id);
     // 게시글 작성자, 댓글 작성자와 현재 로그인한 사람의 id가 일치하면 추가옵션 보이고 아니면 안보이게 하기 위한 변수
-    const author = response.user_id
+    const authorId = response.user_id
     const currentUser = payload ? JSON.parse(payload).user_id : undefined;
 
     console.log(response)
 
     const articleTitle = document.getElementById("article-title")
+    const articleAuthor = document.getElementById("article-author")
+
+    const articleCreatedAt = document.getElementById("article-created-at")
+    const createdTime = new Date(response.created_at)
+    const formattedTime = formatDateTime(createdTime)
+
+    // 게시글 작성시간 포맷
+    function formatDateTime(dateTime) {
+        const year = dateTime.getFullYear()
+        const month = String(dateTime.getMonth() + 1).padStart(2, "0");
+        const day = String(dateTime.getDate()).padStart(2, "0");
+        const hours = String(dateTime.getHours()).padStart(2, "0");
+        const minutes = String(dateTime.getMinutes()).padStart(2, "0");
+        const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}`;
+        return formattedDateTime;
+    }
+
     const articleImage = document.getElementById("article-image")
     const articleContent = document.getElementById("article-content")
     const articleLikeCount = document.getElementById("article-like-count")
 
     articleTitle.innerText = response.title
+    articleAuthor.innerText = response.user
+    articleCreatedAt.innerText = formattedTime
     articleContent.innerText = response.content
     articleLikeCount.innerText = "좋아요: " + response.like_count
 
@@ -53,41 +73,13 @@ async function loadArticles(article_id) {
     }
     // 게시글 작성자와 현재 로그인한 사람의 id가 일치하면 수정삭제 보이고 아니면 안보임
     // currentUser !=undefined 그리고 author = currentUser 
-    if (currentUser && author === currentUser) {
+    if (currentUser && authorId === currentUser) {
         document.getElementById("update_button").style.display = "block";
         document.getElementById("delete_button").style.display = "block";
     } else {
         document.getElementById("update_button").style.display = "none";
         document.getElementById("delete_button").style.display = "none";
     }
-
-    // 댓글 가져오기
-    const comments = response.comments
-    const commentsList = document.getElementById("comment-list")
-    commentsList.innerHTML = ""
-    comments.forEach(comment => {
-        const commentButton = comment.user_id === currentUser
-            // 작성자가 본인일 때 옵션 보여주기
-            ? `
-            <button type="button" class="btn btn-outline-info" id="edit-button-${comment.id}" onclick="handleEditComment(${comment.id})">수정</button>
-
-            <button type="button" class="btn btn-outline-danger" id="delete-button-${comment.id}" onclick="removeComment(${comment.id})">삭제</button>
-            `
-            : '';
-
-        commentsList.innerHTML += `
-        <li class="media d-flex mb-3">
-            <img class="mr-3" src="" alt="프로필 이미지" width="50" height="50">
-            <div class="media-body">
-                <h5 class="mt-0 mb-1">${comment.nickname}</h5>
-                <div>
-                <p id="${comment.id}" class="comment-content">${comment.content}</p> 
-                </div>
-                <p>${commentButton}</p>
-            </div>
-        </li>
-        `
-    })
 }
 
 // 좋아요
@@ -137,14 +129,53 @@ async function deleteArticle() {
     }
 }
 
+// 댓글 가져오기
+async function loadComments(article_id) {
+    const response = await getArticle(article_id);
+    const currentUser = payload ? JSON.parse(payload).user_id : undefined;
+
+    const comments = response.comments
+    const commentsList = document.getElementById("comment-list")
+    commentsList.innerHTML = ""
+    comments.forEach(comment => {
+        const commentButton = comment.user_id === currentUser
+            // 작성자가 본인일 때 옵션 보여주기
+            ? `
+            <button type="button" class="btn btn-outline-info" id="edit-button-${comment.id}" onclick="handleEditComment(${comment.id})">수정</button>
+
+            <button type="button" class="btn btn-outline-danger" id="delete-button-${comment.id}" onclick="removeComment(${comment.id})">삭제</button>
+            `
+            : '';
+
+        commentsList.innerHTML += `
+        <li class="media d-flex mt-3 mb-3">
+            <img class="mr-3" src="" alt="프로필" width="50" height="50">
+            <div class="media-body" style="max-width: 400px; min-width: 400px;">
+                <h5 class="mt-0 mb-1">${comment.nickname}</h5>
+                <div>
+                <p id="${comment.id}" class="comment-content" style="padding: 10px;">${comment.content}</p> 
+                </div>
+            </div>
+            <p>${formatTimeAgo(comment.updated_at)}</p>
+            <p style="margin-left: auto;">${commentButton}</p>
+        </li>
+        `
+    })
+}
+
+// 댓글 수정시간 계산 함수
+function formatTimeAgo(updated_at) {
+    const timeAgo = Math.floor((Date.now() - new Date(updated_at)) / (1000 * 60));
+    return `${timeAgo}분 전`;
+}
+
 // 댓글 작성
 async function submitComment() {
     const commentElement = document.getElementById("new-comment")
     const newComment = commentElement.value
     const response = await postComment(article_id, newComment)
     commentElement.value = ""
-
-    location.reload()
+    loadComments(article_id)
 }
 
 // 댓글 작성 api (json)
@@ -165,13 +196,13 @@ async function postComment(article_id, newComment) {
     )
     if (response.status == 200) {
         response_json = await response.json()
-        alert("댓글을 작성했습니다.")
+
         return response_json
     } else {
         alert(response.status)
     }
 }
-// 댓글 수정 인풋으로! crud 기초강의 참고 
+// 댓글 수정모드
 async function handleEditComment(comment_id) {
     const thisComment = document.getElementById(comment_id).parentNode
     thisComment.style.visibility = "hidden";
@@ -185,7 +216,6 @@ async function handleEditComment(comment_id) {
     // 수정버튼을 한 번 눌렀을 때 onclick 속성을 handleUpdateConfirm으로 변경
     const update_button = document.getElementById(`edit-button-${comment_id}`)
     update_button.setAttribute("onclick", `handleUpdateConfirm(${comment_id})`)
-    console.log(update_button)
 }
 
 // 댓글 수정 api
@@ -209,12 +239,12 @@ async function handleUpdateConfirm(comment_id) {
         }
     )
     if (response.status == 200) {
-        alert("댓글이 수정되었습니다.")
+
     } else {
         alert(response.status)
     }
 
-    window.location.reload();
+    loadComments(article_id);
 }
 
 
