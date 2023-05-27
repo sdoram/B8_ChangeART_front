@@ -95,14 +95,15 @@ button:disabled,
 
 .sh_art_list {
     /* background-color: #4a256d; */
-    min-width: 66%;
+    max-width: 500px;
+    min-width: 70%;
     height: max-content;
     margin-left: 70px;
 }
 
 .sh_art_img {
-    width: 250px;
-    height: 250px;
+    width: 210px;
+    height: 210px;
     object-fit: cover;
     object-position: center;
 }

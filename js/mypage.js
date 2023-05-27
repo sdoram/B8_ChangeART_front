@@ -27,7 +27,7 @@ window.onload = async function getUser() {
         } else {
             const profile = document.createElement("img")
             profile.setAttribute("class", "sh_profile-img")
-            profile.setAttribute("src", `${backend_base_url}${NoImage}`)
+            profile.setAttribute("src", `${noImage}`)
             userProfileImage.append(profile)
         }
 
@@ -87,10 +87,10 @@ window.onload = async function getUser() {
             newCard.setAttribute("id", article.id);
 
             newCol.appendChild(newCard)
-            
+            console.log(article.image)
             const articleImage = document.createElement("img")
             articleImage.setAttribute("class", "sh_art_img")
-            if (article.image.image) {
+            if (article.image) {
                 articleImage.setAttribute("src", `${backend_base_url}${article.image.image}`)
             } else {
                 articleImage.setAttribute("src", `${noImage}`)
