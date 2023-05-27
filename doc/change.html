@@ -57,7 +57,7 @@
                         <div id="drop-file" class="drag-file">
                             <span class="material-symbols-outlined" style="font-size: 50px;">add_photo_alternate</span>
                             <header> </header>
-                            <img src="" alt="미리보기 이미지" class="preview">
+                            <img src="" alt="미리보기 이미지" class="before-image">
                         </div>
                         <label class="file-label" for="chooseFile">컴퓨터에서 찾기</label>
                         <input class="file" id="chooseFile" type="file" onChange="dropFile.handleFiles(this.files)"
@@ -69,7 +69,7 @@
 
                     </div>
                     <div>
-                        <button type="button" class="button button5" onclick="transferImage()" id="img_upload_btn">이미지
+                        <button type="button" class="button button5" onclick="uploadImage()" id="img_upload_btn">이미지
                             변환
                         </button>
 
