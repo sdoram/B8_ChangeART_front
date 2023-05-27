@@ -40,7 +40,7 @@ window.onload = async function getUser() {
             // 페이지 이동
             const user_newCol = document.createElement("div");
             user_newCol.setAttribute("class", "col");
-            user_newCol.setAttribute("onclick", `authorMyPage(${user_following.id})`)
+            user_newCol.setAttribute("onclick", `authorMyPage(${user_following.user_id})`)
             // 유저 정보
             const user_newCard = document.createElement("div");
             user_newCard.setAttribute("class", "card");
@@ -56,7 +56,8 @@ window.onload = async function getUser() {
             // 유저 프로필이미지
             const userImage = document.createElement("img")
             userImage.setAttribute("class", "card-img-top")
-            if (userImage.image) {
+
+            if (user_following.profile_image) {
                 userImage.setAttribute("src", `${backend_base_url}${user_following.profile_image}`)
             } else {
                 userImage.setAttribute("src", `${noImage}`)
@@ -83,11 +84,11 @@ window.onload = async function getUser() {
             newCard.setAttribute("id", article.id);
 
             newCol.appendChild(newCard)
-
+            
             const articleImage = document.createElement("img")
             articleImage.setAttribute("class", "card-img-top")
-            if (article.image) {
-                articleImage.setAttribute("src", `${backend_base_url}${article.image}`)
+            if (article.image.image) {
+                articleImage.setAttribute("src", `${backend_base_url}${article.image.image}`)
             } else {
                 articleImage.setAttribute("src", `${noImage}`)
             }
