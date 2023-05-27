@@ -59,6 +59,8 @@ async function loadArticles(article_id) {
     profile_image = `${backend_base_url}${author_profile_image}`
 
     authorProfileImage.setAttribute("src", `${profile_image}`)
+    authorProfileImage.setAttribute("onclick", `moveMyPage(${authorId})`)
+
     articleTitle.innerText = response.title
     articleAuthor.innerText = response.user
     articleAuthor.setAttribute("onclick", `moveMyPage(${authorId})`)
@@ -166,7 +168,7 @@ async function loadComments(article_id) {
         const profile_image = `${backend_base_url}${comment.profile_image.profile_image}`
         commentsList.innerHTML += `
         <li class="media d-flex mt-3 mb-3" style="border-bottom: 1px solid #ccc;">
-            <img class="profile-image" src="${profile_image}" alt="프로필" width="50" height="50" style="border-radius: 50%;">
+            <img class="profile-image" src="${profile_image}" alt="프로필" width="50" height="50" style="border-radius: 50%; cursor:pointer;" onclick="moveMyPage(${comment.user_id})">
             <div class="media-body" style="max-width: 60%; min-width: 60%;">
                 <h5 class="mt-0 mb-1" style="cursor:pointer;" onclick="moveMyPage(${comment.user_id})">${comment.nickname}</h5>
                 <div>
