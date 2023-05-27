@@ -22,11 +22,6 @@
     <header></header>
     <p>좋아요 가장 많은 게시글 보여주기 </p>
     <div class="container right-container">
-        <!-- <div class="col" onclick="articleDetail()">
-        <div class="card" id="most-likes">
-                <img src="" alt="" class="card-img-top">
-            </div>
-        </div> -->
         <button type="button" onclick="handleMoveCreate()" class="btn btn-outline-secondary">글쓰기</button>
         <button type="button" onclick="handleMoveChange()" class="btn btn-outline-secondary">이미지 변환</button>
         <div class="dropdown">
@@ -36,7 +31,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li><button value="likes" class="dropdown-item" onclick="handleSortButton(this)">좋아요</button></li>
-                <li><button value="latest" class="dropdown-item" onclick="handleSortButton(this)">최신</button></li>
+                <li><button value="outdated" class="dropdown-item" onclick="handleSortButton(this)">오래된 순</button></li>
                 <li><button value="comments" class="dropdown-item" onclick="handleSortButton(this)">댓글 많은
                         순</button></li>
             </ul>
