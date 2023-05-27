@@ -71,7 +71,7 @@ window.onload = async function getUser() {
             user_newCard.appendChild(user_name)
 
             // 카드 append
-            userFollowingList.appendChild(user_newCol)
+            userFollowingList.insertBefore(user_newCol,userFollowingList.firstChild);
         })
 
         // 유저 게시글 정보
@@ -96,8 +96,8 @@ window.onload = async function getUser() {
                 articleImage.setAttribute("src", `${noImage}`)
             }
             newCard.appendChild(articleImage)
-
-            userArticles.appendChild(newCol)
+            
+            userArticles.insertBefore(newCol,userArticles.firstChild);
         })
 
         let authorId = `${user_id}`
@@ -135,10 +135,9 @@ async function myPageFixing() {
     window.location.href = `${frontend_base_url}/doc/mypagefix.html?user_id=${user_id}`
 }
 
-
 // 팔로우버튼
 async function onClickFollowing() {
-    const response = await fetch(`${backend_base_url}/users/${JSON.parse(payload).user_id}/`, {
+    const response = await fetch(`${backend_base_url}/users/${user_id}/`, {
         headers: {
             "Authorization": `Bearer ${token}`
         },
