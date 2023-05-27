@@ -6,7 +6,7 @@ const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const token = localStorage.getItem("access");
 
-const noImage = "https://github.com/sdoram/sdoram/assets/108051577/68aa56dc-3605-4f70-a8b7-044109871a38"
+const noImage = "https://github.com/sdoram/B8_ChangeART_front/assets/122615809/8051b2fc-035a-44db-9aa7-0533afacc6cb"
 
 const noProfileImage = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmC5jq%2FbtshzYZQFIL%2FkKMAW65wigPLiKvVkfQkTk%2Fimg.png"
 

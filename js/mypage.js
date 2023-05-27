@@ -18,13 +18,16 @@ window.onload = async function getUser() {
 
         // 유저 프로필 사진 정보
         const userProfileImage = document.getElementById('user-profile-image')
+
         if (response_json.profile_image) {
             const profile = document.createElement("img")
+            profile.setAttribute("class", "sh_profile-img")
             profile.setAttribute("src", `${backend_base_url}${response_json.profile_image}`)
             userProfileImage.append(profile)
         } else {
             const profile = document.createElement("img")
-            profile.setAttribute("src", `${backend_base_url}${NoImage}`)
+            profile.setAttribute("class", "sh_profile-img")
+            profile.setAttribute("src", `${noImage}`)
             userProfileImage.append(profile)
         }
 
@@ -39,7 +42,7 @@ window.onload = async function getUser() {
             console.log(user_following)
             // 페이지 이동
             const user_newCol = document.createElement("div");
-            user_newCol.setAttribute("class", "col");
+            user_newCol.setAttribute("class", "col_fl");
             user_newCol.setAttribute("onclick", `authorMyPage(${user_following.user_id})`)
             // 유저 정보
             const user_newCard = document.createElement("div");
@@ -47,7 +50,7 @@ window.onload = async function getUser() {
             user_newCard.setAttribute("id", user_following.id);
             // 유저 이름
             const user_name = document.createElement("div");
-            user_newCard.setAttribute("class", "row");
+            user_newCard.setAttribute("class", "sh_in_profile");
             user_newCard.setAttribute("id", user_following.nickname);
 
             user_newCol.appendChild(user_newCard)
@@ -55,7 +58,7 @@ window.onload = async function getUser() {
 
             // 유저 프로필이미지
             const userImage = document.createElement("img")
-            userImage.setAttribute("class", "card-img-top")
+            userImage.setAttribute("class", "sh_small_img")
 
             if (user_following.profile_image) {
                 userImage.setAttribute("src", `${backend_base_url}${user_following.profile_image}`)
@@ -77,17 +80,17 @@ window.onload = async function getUser() {
         response_json.user_articles.forEach(article => {
             console.log(article)
             const newCol = document.createElement("div");
-            newCol.setAttribute("class", "col");
+            newCol.setAttribute("class", "col_art");
             newCol.setAttribute("onclick", `articleDetail(${article.id})`)
             const newCard = document.createElement("div");
             newCard.setAttribute("class", "card");
             newCard.setAttribute("id", article.id);
 
             newCol.appendChild(newCard)
-            
+            console.log(article.image)
             const articleImage = document.createElement("img")
-            articleImage.setAttribute("class", "card-img-top")
-            if (article.image.image) {
+            articleImage.setAttribute("class", "sh_art_img")
+            if (article.image) {
                 articleImage.setAttribute("src", `${backend_base_url}${article.image.image}`)
             } else {
                 articleImage.setAttribute("src", `${noImage}`)
