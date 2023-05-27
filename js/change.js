@@ -70,14 +70,16 @@ async function uploadImage() {
 
     if (response.status == 201) {
         // 홈페이지에 after_image 띄우기
-        const getImage = await getImages();
+        const getimages = await getImages()
         const after_image = document.getElementById("after_image")
-        console.log(getImage)
-        after_image.setAttribute("src", `${backend_base_url}${getImage.after_image}`)
+        console.log(getimages)
+        after_image.setAttribute("src", `${backend_base_url}${getimages.after_image}`)
         return response
     } else {
         if (file == null) {
             alert('파일을 올려주세요')
+        } else {
+            alert('로그인 해주세요')
         }
     }
 }
@@ -87,7 +89,7 @@ async function transferImage() {
     const beforeImg = document.getElementById("beforeImage").value
     const response = await fetch(`${backend_base_url}/change/`, {
         headers: {
-            'Authorization': localStorage.getItem("token")
+            'Authorization': token
         },
         method: 'PUT',
 
