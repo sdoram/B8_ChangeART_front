@@ -1,4 +1,3 @@
-const backEndBaseUrl = "http://127.0.0.1:8000"
 
 // 이미지 업로드
 const dropArea = document.querySelector(".drag-area"),
@@ -61,9 +60,9 @@ async function uploadImage() {
     const imageData = new FormData()
     imageData.append("before_image", file)
 
-    const response = await fetch(`http://127.0.0.1:8000/change/`, {
+    const response = await fetch(`${backend_base_url}/change/`, {
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem("access"),
+            'Authorization': 'Bearer ' + token,
         },
         method: 'POST',
         body: imageData
@@ -71,10 +70,10 @@ async function uploadImage() {
 
     if (response.status == 201) {
         // 홈페이지에 after_image 띄우기
-        const getImage = await getImages();
+        const getimages = await getImages()
         const after_image = document.getElementById("after_image")
-        console.log(getImage)
-        after_image.setAttribute("src", `${backEndBaseUrl}${getImage.after_image}`)
+        console.log(getimages)
+        after_image.setAttribute("src", `${backend_base_url}${getimages.after_image}`)
         return response
     } else {
         if (file == null) {
@@ -86,9 +85,9 @@ async function uploadImage() {
 // // 이미지 파일 변환
 async function transferImage() {
     const beforeImg = document.getElementById("beforeImage").value
-    const response = await fetch(`${backEndBaseUrl}/change/`, {
+    const response = await fetch(`${backend_base_url}/change/`, {
         headers: {
-            'Authorization': localStorage.getItem("token")
+            'Authorization': token
         },
         method: 'PUT',
 
