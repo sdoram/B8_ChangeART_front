@@ -56,6 +56,52 @@ function showFile() {
 /* ---------------------------------------------------------------------------- */
 
 
+// 이미지 DB 업로드
+async function uploadImage() {
+    const imageData = new FormData()
+    imageData.append("before_image", file)
+
+    const response = await fetch(`http://127.0.0.1:8000/change/`, {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("access"),
+        },
+        method: 'POST',
+        body: imageData
+    })
+
+    if (response.status == 201) {
+        // 홈페이지에 after_image 띄우기
+        const getImage = await getImages();
+        const after_image = document.getElementById("after_image")
+        console.log(getImage)
+        after_image.setAttribute("src", `${backEndBaseUrl}${getImage.after_image}`)
+        return response
+    } else {
+        if (file == null) {
+            alert('파일을 올려주세요')
+        }
+    }
+}
+
+// // 이미지 파일 변환
+async function transferImage() {
+    const beforeImg = document.getElementById("beforeImage").value
+    const response = await fetch(`${backEndBaseUrl}/change/`, {
+        headers: {
+            'Authorization': localStorage.getItem("token")
+        },
+        method: 'PUT',
+
+    })
+
+    if (response.status == 200) {
+        return response
+    } else {
+        alert(response.status)
+    }
+}
+
+
 
 
 
