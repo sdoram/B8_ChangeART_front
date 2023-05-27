@@ -26,12 +26,12 @@ function updatePage() {
 // 게시글 상세보기 
 async function loadArticles(article_id) {
     const response = await getArticle(article_id);
+    const author_profile_image = response.profile_image.profile_image
+    console.log(response)
+
     // 게시글 작성자, 댓글 작성자와 현재 로그인한 사람의 id가 일치하면 추가옵션 보이고 아니면 안보이게 하기 위한 변수
     const authorId = response.user_id
     const currentUser = payload ? JSON.parse(payload).user_id : undefined;
-
-    console.log(currentUser)
-    console.log(authorId)
 
     const articleTitle = document.getElementById("article-title")
     const articleAuthor = document.getElementById("article-author")
@@ -54,14 +54,18 @@ async function loadArticles(article_id) {
     const articleImage = document.getElementById("article-image")
     const articleContent = document.getElementById("article-content")
     const articleLikeCount = document.getElementById("article-like-count")
+    const authorProfileImage = document.getElementById("author-profile-image")
 
+    profile_image = `${backend_base_url}${author_profile_image}`
+
+    authorProfileImage.setAttribute("src", `${profile_image}`)
     articleTitle.innerText = response.title
     articleAuthor.innerText = response.user
     articleAuthor.setAttribute("onclick", `moveMyPage(${authorId})`)
 
     articleCreatedAt.innerText = formattedTime
     articleContent.innerText = response.content
-    articleLikeCount.innerText = "좋아요: " + response.like_count
+    articleLikeCount.innerText = response.like_count
 
     const imageElement = document.createElement('img');
     // 다중이미지 불러오는 코드
@@ -71,6 +75,7 @@ async function loadArticles(article_id) {
             const imageURL = backend_base_url + image.image.replace(/\"/gi, "")
             imageElement.setAttribute("src", imageURL)
             imageElement.setAttribute("class", "img-fluid")
+            imageElement.setAttribute("style", "margin-bottom: 20px;")
             articleImage.appendChild(imageElement.cloneNode(true))
         }
     }
@@ -88,7 +93,6 @@ async function loadArticles(article_id) {
 // 게시글 작성자 이름 눌러서 작성자의 마이페이지로 이동하는 함수
 async function moveMyPage(user_id) {
     window.location.href = `${frontend_base_url}/doc/mypage.html?user_id=${user_id}`
-
 }
 
 // 좋아요
@@ -141,7 +145,10 @@ async function deleteArticle() {
 // 댓글 가져오기
 async function loadComments(article_id) {
     const response = await getArticle(article_id);
+
     const currentUser = payload ? JSON.parse(payload).user_id : undefined;
+
+
 
     const comments = response.comments
     const commentsList = document.getElementById("comment-list")
@@ -156,9 +163,10 @@ async function loadComments(article_id) {
             `
             : '';
 
+        const profile_image = `${backend_base_url}${comment.profile_image.profile_image}`
         commentsList.innerHTML += `
-        <li class="media d-flex mt-3 mb-3">
-            <img class="mr-3" src="" alt="프로필" width="50" height="50">
+        <li class="media d-flex mt-3 mb-3" style="border-bottom: 1px solid #ccc;">
+            <img class="profile-image" src="${profile_image}" alt="프로필" width="50" height="50" style="border-radius: 50%;">
             <div class="media-body" style="max-width: 60%; min-width: 60%;">
                 <h5 class="mt-0 mb-1" style="cursor:pointer;" onclick="moveMyPage(${comment.user_id})">${comment.nickname}</h5>
                 <div>
@@ -174,8 +182,18 @@ async function loadComments(article_id) {
 
 // 댓글 수정시간 계산 함수
 function formatTimeAgo(updated_at) {
-    const timeAgo = Math.floor((Date.now() - new Date(updated_at)) / (1000 * 60));
-    return `${timeAgo}분 전`;
+    const timeDifference = Date.now() - new Date(updated_at);
+    const minutes = Math.floor(timeDifference / (1000 * 60));
+    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    if (minutes < 60) {
+        return `${minutes}분 전`;
+    } else if (hours < 24) {
+        return `${hours}시간 전`;
+    } else {
+        return `${days}일 전`;
+    }
 }
 
 // 댓글 작성

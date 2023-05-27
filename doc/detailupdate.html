@@ -21,7 +21,7 @@
 
 <body>
     <header></header>
-    <div class="container w-50">
+    <div class="container w-50 mb-5">
         <h1>
             게시글 수정
         </h1>
@@ -29,17 +29,16 @@
             <label for="title">제목</label>
             <input type="text" id="title" name="title">
             <label for="content">내용</label>
-            <textarea id="content" name="content"></textarea>
+            <textarea class="w-100" id="content" name="content"></textarea>
 
-            <div id="imageContainer">
+            <div class="w-100" id="imageContainer">
                 <div class="col mt-5" id="article-image"></div>
                 <label for="image" style="margin-top: 5%;">이미지</label>
                 <input type="file" multiple id="image" name="image">
                 <p id="file-name" style="color:white"></p>
             </div>
-            <button id="button-btn" type="button" onclick="backhHistory()">취소</button>
-            <button id="button-btn" type="button" onclick="updateArticle()">수정</button>
-
+            <button class="btn btn-light" id="button-btn" type="button" onclick="backhHistory()">취소</button>
+            <button class="btn btn-dark" id="button-btn" type="button" onclick="updateArticle()">수정</button>
         </form>
     </div>
 </body>
