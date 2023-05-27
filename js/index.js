@@ -1,41 +1,53 @@
 console.log('메인 페이지 연결')
-console.log('?' + document.location.href.split('?')[1])
 const urlParams = new URL(location.href).searchParams;
+const order = urlParams.get('order')
 const page = urlParams.get('page')
+if (order) {
+    currentOrder = `?order=${order}`
+} else {
+    currentOrder = ''
+}
 if (page) {
-    currentPage = `?page=${page}`
+    if (order) {
+        currentPage = `&page=${page}`
+    } else {
+        currentPage = `?page=${page}`
+    }
 } else {
     currentPage = ''
 }
 
+
+// 게시글 정렬 버튼
+async function handleSortButton(btn) {
+    ordering = `?order=${btn.value}`
+    if (page) {
+        currentPage = `&page=${page}`
+    }
+    location.href = `${document.location.href.split('?')[0]}${ordering}${currentPage}`
+}
+
 // 게시글 리스트 불러오기 
 async function getArticles() {
-    const response = await fetch(`${backend_base_url}/home/${currentPage}`, {
+    const response = await fetch(`${backend_base_url}/home/${currentOrder}${currentPage}`, {
     })
     if (response.status == 200) {
         const response_json = await response.json()
-        console.log(response_json)
-        console.log(response_json.results)
         return response_json.results
     } else {
         alert('게시글 로딩 실패')
     }
 }
-async function handleSortButton(btn) {
-    console.log('정렬 버튼')
-    console.log(btn.id)
-    console.log(btn.value)
-}
 
 // 페이지네이션
 // 이전 페이지 보기
 async function previousPage() {
-    const response = await fetch(`${backend_base_url}/home/${currentPage}`, {
+    const response = await fetch(`${backend_base_url}/home/${currentOrder}${currentPage}`, {
     })
     const response_json = await response.json()
-    console.log('이전 페이지 클릭')
     if (response_json.previous) {
-        location.href = `${frontend_base_url}/index.html${response_json.previous.split('/')[4]}`
+        const previous = response_json.previous.split('?')[1]
+        location.href = `${frontend_base_url}?${previous}`
     } else {
         alert('이전 페이지가 없습니다.')
     }
@@ -43,12 +55,12 @@ async function previousPage() {
 
 // 다음 페이지 보기
 async function nextPage() {
-    const response = await fetch(`${backend_base_url}/home/${currentPage}`, {
+    const response = await fetch(`${backend_base_url}/home/${currentOrder}${currentPage}`, {
     })
     const response_json = await response.json()
-    console.log('다음 페이지 클릭')
     if (response_json.next) {
-        location.href = `${frontend_base_url}/index.html${response_json.next.split('/')[4]}`
+        const next = response_json.next.split('?')[1]
+        location.href = `${frontend_base_url}?${next}`
     } else {
         alert('다음 페이지가 없습니다.')
     }
@@ -67,11 +79,9 @@ function articleDetail(article_id) {
 // 각 게시글 정보 불러오기
 window.onload = async function loadArticles() {
     articles = await getArticles()
-    console.log(articles)
     const article_list = document.getElementById("article-list")
 
     articles.forEach(article => {
-        console.log(article)
         const newCol = document.createElement("div");
         newCol.setAttribute("class", "col");
         newCol.setAttribute("onclick", `articleDetail(${article.id})`)
