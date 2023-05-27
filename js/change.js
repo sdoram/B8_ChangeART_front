@@ -78,6 +78,8 @@ async function uploadImage() {
     } else {
         if (file == null) {
             alert('파일을 올려주세요')
+        } else {
+            alert('로그인 해주세요')
         }
     }
 }
