@@ -21,15 +21,18 @@
 
 <body>
     <header></header>
-    <h1>마이페이지 수정</h1>
-    <form>
-        <img id="profile_img">
-        <input id="profile_image" name="profile_image" type="file"/>
-        <input id="nickname" name="nickname" placeholder="Nickname" type="text"/>
-        <input id="password" name="password" placeholder="Password" type="password"/>
-        <button type="button" onclick="fixingUserInfo()">수정하기</button>
-        <button type="button" onclick="withDrawUser()">회원 탈퇴하기</button>
-    </form>
+    <div class="sh_container signup">
+        <div class="sh_col">
+            <div>
+                <p class="sh_title">Profile Image</p>
+                <input id="profile_image" class="sh_input" name="profile_image" type="file"/>
+            </div>
+            <input id="nickname" class="sh_input" name="nickname" placeholder="Nickname" type="text"/>
+            <input id="password" class="sh_input" name="password" placeholder="Password" type="password"/>
+        </div>
+        <button type="button" class="sh_btn sh_red" onclick="withDrawUser()">회원 탈퇴하기</button>
+        <button type="button" style="float: right;" class="sh_btn" onclick="fixingUserInfo()">수정하기</button>
+    </div>
 </body>
 
 </html>
