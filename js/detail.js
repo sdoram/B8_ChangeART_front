@@ -56,7 +56,11 @@ async function loadArticles(article_id) {
     const articleLikeCount = document.getElementById("article-like-count")
     const authorProfileImage = document.getElementById("author-profile-image")
 
-    profile_image = `${backend_base_url}${author_profile_image}`
+    if (author_profile_image) {
+        profile_image = `${backend_base_url}${author_profile_image}`
+    } else {
+        profile_image = `${noProfileImage}`
+    }
 
     authorProfileImage.setAttribute("src", `${profile_image}`)
     authorProfileImage.setAttribute("onclick", `moveMyPage(${authorId})`)
@@ -152,6 +156,7 @@ async function loadComments(article_id) {
 
 
 
+
     const comments = response.comments
     const commentsList = document.getElementById("comment-list")
     commentsList.innerHTML = ""
@@ -165,7 +170,14 @@ async function loadComments(article_id) {
             `
             : '';
 
-        const profile_image = `${backend_base_url}${comment.profile_image.profile_image}`
+
+        console.log(comment.profile_image.profile_image)
+        if (comment.profile_image.profile_image) {
+            profile_image = `${backend_base_url}${comment.profile_image.profile_image}`
+        } else {
+            profile_image = `${noProfileImage}`
+        }
+
         commentsList.innerHTML += `
         <li class="media d-flex mt-3 mb-3" style="border-bottom: 1px solid #ccc;">
             <img class="profile-image" src="${profile_image}" alt="프로필" width="50" height="50" style="border-radius: 50%; cursor:pointer;" onclick="moveMyPage(${comment.user_id})">
