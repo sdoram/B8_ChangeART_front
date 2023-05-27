@@ -23,36 +23,43 @@
     <header></header>
 
     <h1>
-        게시글 상세보기
+
     </h1>
-    <div class="container text-center">
+    <div class="container text-center" style="border: 2px dotted #ccc; padding: 20px;">
         <h1 id="article-title"></h1>
-        <h5 id="article-author" style="display: inline;  cursor:pointer;">작성자</h5>
-        <h5 id="article-created-at" style="display: inline;">생성시간</h5>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <img id="author-profile-image" class="author-profile-image" width="50" height="50"
+                style="border-radius: 50%;">
+            <h5 id="article-author" style="display: inline;  cursor:pointer;">작성자</h5>
+        </div>
+        <div style="margin-bottom: 40px;">
+            <h5 id="article-created-at" style="display: inline; font-size: 14px;">생성시간</h5>
+        </div>
         <div class="row row-cols-1 row-cols-mb-2" id="article">
-            <div class="col" id="article-image"></div>
-            <div class="col" id="article-content"></div>
-            <div class="col" id="article-like-count"></div>
-            <div class="card text-center" style="border:none">
-                <a href="#" onclick="like()" style="text-decoration: none; font-size: 30px;">💗</a>
+            <div class="col" id="article-image" style="margin-bottom: 20px;"></div>
+            <div class="col" id="article-content" style="margin-bottom: 100px;"></div>
+            <div class="card text-center" style="border:none; margin-bottom: 50px;">
+                <a onclick="like()" style="text-decoration: none; font-size: 30px; cursor:pointer;">💗</a>
+                <span id="article-like-count">0</span>
             </div>
-            <div id="more-options">
-                <button type="button" id="update_button" class="btn btn-primary mr-2" onclick="updatePage()">수정</button>
+            <div id="more-options" style="display: flex; justify-content: flex-end;">
+                <button type="button" id="update_button" class="btn btn-dark mr-2" onclick="updatePage()">수정</button>
                 <button type="button" id="delete_button" class="btn btn-danger" onclick="removeArticle()">삭제</button>
             </div>
         </div>
-        <div class="form-container mt-5">
-            <form id="comment-form" class="comment-form" onsubmit="submitComment(); return false;">
-                <div class="form-group mb-5">
-                    <div class="form-group d-flex justify-content-center">
-                        <input type="text" class="form-control" id="new-comment" name="comment"
-                            placeholder="댓글을 작성해주세요">
-                        <button type="button" class="btn btn-success" onclick="submitComment()">등록</button>
-                    </div>
-            </form>
+    </div>
+    <div class="container text-center mt-5">
+        <form id="comment-form" class="comment-form" onsubmit="submitComment(); return false;">
+            <div class="form-group mb-5">
+                <div class="form-group d-flex justify-content-center">
+                    <input type="text" class="form-control" id="new-comment" name="comment" placeholder="댓글을 작성해주세요">
+                    <button type="button" class="btn btn-secondary" onclick="submitComment()">등록</button>
+                </div>
+        </form>
 
-            <ul id="comment-list" class="list-group comment-list">
-            </ul>
+        <ul id="comment-list" class="list-group comment-list">
+        </ul>
+    </div>
 
 </body>
 

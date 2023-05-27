@@ -49,7 +49,7 @@ async function beforeArticle(article_id) {
             // 이미지 삭제버튼생성
             const deleteImage = document.createElement('button');
             deleteImage.setAttribute("type", "button")
-            deleteImage.textContent = 'X';
+            deleteImage.setAttribute("class", "btn-close")
             const image_id = image.id
             deleteImage.setAttribute("onclick", `deleteImage(${image_id})`)
 
