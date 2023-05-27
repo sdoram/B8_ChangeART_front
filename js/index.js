@@ -71,10 +71,6 @@ function articleDetail(article_id) {
     console.log(article_id)
     window.location.href = `${frontend_base_url}/doc/detail.html?article_id=${article_id}`
 }
-// 좋아요 가장 많은 게시글
-// window.onload = async function loadMostLikesArticle() {
-//     article = 
-// }
 
 // 각 게시글 정보 불러오기
 window.onload = async function loadArticles() {
