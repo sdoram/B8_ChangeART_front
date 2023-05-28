@@ -22,7 +22,7 @@ async function injectNavbar() {
     let articleCreateLink = document.createElement("a");
     articleCreateLink.setAttribute("href", "../doc/create.html");
     articleCreateLink.setAttribute("class", "nav-link");
-    articleCreateLink.innerHTML = "글 작성";
+    articleCreateLink.innerHTML = "글쓰기";
 
     articleCreateLi.appendChild(articleCreateLink);
 
