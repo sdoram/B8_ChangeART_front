@@ -23,78 +23,52 @@
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/change.css">
-    <!-- <script src="../js/change.js"></script> -->
 
     <title>ChangeART</title>
 </head>
 
 <body>
+    <header></header>
+
     <div class="container">
-        <header
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <!-- <a href="/"> -->
-            <h1 style="font-family:'Jua', sans-serif; color: #F0EDCC;" onclick="location.href='/home.html'">
-            </h1>
-            </a>
+        <div class="parent">
 
-            <div class="userbutton col-md-3 text-end" style="font-family:'Jua', sans-serif;">
-                <button type="button" id="loginout" onclick="logout()" style="margin-right: 10px;">로그인</button>
-                <button type="button" onclick="location.href='/signup.html'">회원가입</button>
+            <div class="child1">
+                <div class="drag-area">
+                    <div id="drop-file" class="drag-file">
+                        <span class="material-symbols-outlined" style="font-size: 50px;">add_photo_alternate</span>
+                        <header> </header>
+                        <img src="" alt="미리보기 이미지" class="before-image">
+                    </div>
+                    <label class="file-label" for="chooseFile">컴퓨터에서 찾기</label>
+                    <input class="file" id="chooseFile" type="file" onChange="dropFile.handleFiles(this.files)"
+                        accept="image/png, image/jpeg, image/jpg">
+                </div>
             </div>
-        </header>
-    </div>
-    <!-- <h1>
-        이미지 변환
-    </h1> -->
+            <div class="child2">
+                <div class="select-box">
 
-
-    <div>
-
-        <div class="container">
-            <div class="parent">
-
-                <div class="child1">
-                    <div class="drag-area">
-                        <div id="drop-file" class="drag-file">
-                            <span class="material-symbols-outlined" style="font-size: 50px;">add_photo_alternate</span>
-                            <header> </header>
-                            <img src="" alt="미리보기 이미지" class="before-image">
-                        </div>
-                        <label class="file-label" for="chooseFile">컴퓨터에서 찾기</label>
-                        <input class="file" id="chooseFile" type="file" onChange="dropFile.handleFiles(this.files)"
-                            accept="image/png, image/jpeg, image/jpg">
-                    </div>
                 </div>
-                <div class="child2">
-                    <div class="select-box">
-
-                    </div>
-                    <div>
-                        <button type="button" class="button button5" onclick="uploadImage()" id="img_upload_btn">이미지
-                            변환
-                        </button>
-
-                    </div>
-                </div>
-                <div class="child3">
-                    <div class="after-image-box">
-                        <img src="../img/non_image.png" alt="after-image" class="after-image"
-                            onclick="window.open(this.src)" id="after_image">
-                    </div>
-                </div>
-
-            </div>
-            <br>
-            <div>
                 <div>
-                    <button type="button" class="button button6" id="img_save_btn" onclick="downloadImage()">변환 된 이미지
-                        저장하기</button>
+                    <button type="button" class="button button5" onclick="uploadImage()" id="img_upload_btn">이미지
+                  변환 </button>
+                </div>
+            </div>
+            <div class="child3">
+                <div class="after-image-box">
+                    <img src="../img/non_image.png" alt="after-image" class="after-image"
+                        onclick="window.open(this.src)" id="after_image">
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <div>
+            <button type="button" class="button button6 btn_group" id="img_save_btn" onclick="downloadImage()">변환 된 이미지
+                저장하기</button>
 
                     <button type="button" class="button button6" onclick="handleMoveCreate()" id="img_post_btn">포스팅 하러가기
                     </button>
-                </div>
-            </div>
-
         </div>
     </div>
     <script src="../js/api.js"></script>
@@ -102,6 +76,5 @@
     <script src="../js/change.js"></script>
 
 </body>
-
 
 </html>
