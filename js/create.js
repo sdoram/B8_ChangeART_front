@@ -39,6 +39,6 @@ async function createArticle() {
         window.location.href = `${frontend_base_url}/doc/detail.html?article_id=${article_id}`
 
     } else {
-        alert(response.status)
+        alert("제목을 입력해주세요")
     }
 }
