@@ -1,16 +1,68 @@
 console.log('메인 페이지 연결')
+const urlParams = new URL(location.href).searchParams;
+const order = urlParams.get('order')
+const page = urlParams.get('page')
+if (order) {
+    currentOrder = `?order=${order}`
+} else {
+    currentOrder = ''
+}
+if (page) {
+    if (order) {
+        currentPage = `&page=${page}`
+    } else {
+        currentPage = `?page=${page}`
+    }
+} else {
+    currentPage = ''
+}
 
+
+// 게시글 정렬 버튼
+async function handleSortButton(btn) {
+    ordering = `?order=${btn.value}`
+    if (page) {
+        currentPage = `&page=${page}`
+    }
+    location.href = `${document.location.href.split('?')[0]}${ordering}${currentPage}`
+}
 
 // 게시글 리스트 불러오기 
 async function getArticles() {
-    const response = await fetch(`${backend_base_url}/home/`, {
+    const response = await fetch(`${backend_base_url}/home/${currentOrder}${currentPage}`, {
     })
     if (response.status == 200) {
         const response_json = await response.json()
-        console.log(response_json)
         return response_json.results
     } else {
         alert('게시글 로딩 실패')
+    }
+}
+
+// 페이지네이션
+// 이전 페이지 보기
+async function previousPage() {
+    const response = await fetch(`${backend_base_url}/home/${currentOrder}${currentPage}`, {
+    })
+    const response_json = await response.json()
+    if (response_json.previous) {
+        const previous = response_json.previous.split('?')[1]
+        location.href = `${frontend_base_url}?${previous}`
+    } else {
+        alert('이전 페이지가 없습니다.')
+    }
+}
+
+// 다음 페이지 보기
+async function nextPage() {
+    const response = await fetch(`${backend_base_url}/home/${currentOrder}${currentPage}`, {
+    })
+    const response_json = await response.json()
+    if (response_json.next) {
+        const next = response_json.next.split('?')[1]
+        location.href = `${frontend_base_url}?${next}`
+    } else {
+        alert('다음 페이지가 없습니다.')
     }
 }
 
@@ -23,12 +75,9 @@ function articleDetail(article_id) {
 // 각 게시글 정보 불러오기
 window.onload = async function loadArticles() {
     articles = await getArticles()
-    console.log(articles)
     const article_list = document.getElementById("article-list")
 
-    // Array.from(articles).forEach(article => {
     articles.forEach(article => {
-        console.log(articles, article)
         const newCol = document.createElement("div");
         newCol.setAttribute("class", "col");
         newCol.setAttribute("onclick", `articleDetail(${article.id})`)

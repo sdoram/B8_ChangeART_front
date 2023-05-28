@@ -25,37 +25,38 @@ async function beforeArticle(article_id) {
         alert(response.status)
     }
 
-    console.log(article_data);
-
     document.getElementById("title").value = article_data.title;
     document.getElementById("content").value = article_data.content;
 
     // 이미지 가져와서 미리보기
     const articleImage = document.getElementById("article-image")
-    const imageElement = document.createElement('img');
 
     // 다중이미지 불러오는 코드
     if (article_data.images) {
         for (let i = 0; i < article_data.images.length; i++) {
             const image = article_data.images[i];
             const imageURL = backend_base_url + image.image.replace(/\"/gi, "")
+
+            const imageBox = document.createElement('div');
+            imageBox.setAttribute("id", "imageBox")
+
+            const imageElement = document.createElement('img')
             imageElement.setAttribute("src", imageURL)
             imageElement.setAttribute("class", "img-fluid")
             imageElement.setAttribute("width", "100")
             imageElement.setAttribute("height", "100")
 
-            // 이미지 삭제
-            const imageContainer = document.createElement('div');
-            imageContainer.appendChild(imageElement);
-
+            // 이미지 삭제버튼생성
             const deleteImage = document.createElement('button');
-            deleteImage.textContent = 'X';
+            deleteImage.setAttribute("type", "button")
+            deleteImage.setAttribute("class", "btn-close")
             const image_id = image.id
             deleteImage.setAttribute("onclick", `deleteImage(${image_id})`)
 
-            imageContainer.appendChild(deleteImage);
-            articleImage.appendChild(imageContainer.cloneNode(true))
+            imageBox.appendChild(imageElement);
+            imageBox.appendChild(deleteImage);
 
+            articleImage.appendChild(imageBox.cloneNode(true))
         }
     }
     return article_data
@@ -63,9 +64,13 @@ async function beforeArticle(article_id) {
 
 // x버튼함수
 async function deleteImage(image_id) {
+
     delete_images.push(image_id)
     console.log(delete_images)
-    imageContainer.remove();
+    const deleteButton = event.target // 왜 취소선이 생길까? 
+    const imageBox = deleteButton.parentNode
+    imageBox.style.visibility = "hidden"
+
 }
 
 // 게시글 수정
@@ -73,8 +78,6 @@ async function updateArticle() {
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
     const images = document.getElementById("image").files;
-    const delete_images = [];
-    console.log(delete_images)
 
     const formdata = new FormData();
 
@@ -91,12 +94,9 @@ async function updateArticle() {
     }
 
     if (delete_images.length > 0) {
-        for (let i = 0; i < delete_images.length; i++) {
-            const image_id = delete_images[i];
-            formdata.append('delete_images', image_id);
-        }
+        formdata.append('delete_images', JSON.stringify(delete_images))
     } else {
-        formdata.append('delete_images', '[]');
+        formdata.append('delete_images', '[]')
     }
 
     let token = localStorage.getItem("access")
@@ -110,7 +110,7 @@ async function updateArticle() {
     }
     )
     if (response.status == 200) {
-        alert("수정되었습니다")
+        alert("게시글이 수정되었습니다")
         window.history.back();
     } else {
         alert(response.status)

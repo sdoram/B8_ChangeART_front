@@ -32,15 +32,13 @@ async function createArticle() {
     )
     if (response.status == 200) {
         alert("작성완료")
-        window.location.replace(`${frontend_base_url}/index.html`);
+
+        const response_json = await response.json()
+        const article_id = response_json.article_id
+
+        window.location.href = `${frontend_base_url}/doc/detail.html?article_id=${article_id}`
+
     } else {
         alert(response.status)
     }
 }
-
-function showFileName() {
-    const input = document.getElementById("image");
-    const fileName = document.getElementById("file-name");
-    fileName.textContent = input.files.name;
-}
-

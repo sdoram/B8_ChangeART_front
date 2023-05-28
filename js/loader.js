@@ -48,7 +48,7 @@ async function injectNavbar() {
     let myPageLink = document.createElement("a");
     myPageLink.setAttribute("class", "nav-link btn");
     myPageLink.innerText = "내 정보";
-    myPageLink.setAttribute("href", "../doc/mypage.html");
+    myPageLink.setAttribute("href", `${frontend_base_url}/doc/mypage.html?user_id=${payload_parse.user_id}`);
 
     navbarRight.appendChild(myPageLink);
     navbarRight.appendChild(logoutBtn);

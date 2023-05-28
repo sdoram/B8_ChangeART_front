@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@500&display=swap');
+
+* {
+    font-family: 'Hahmlet', serif;
+}
+
+/* body {
+    background-color: antiquewhite
+} */
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 5%;
+}
+
+.container {
+    border: 2px dotted #ccc;
+    padding: 20px;
+    background-color: white;
+}
+
+.my-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.my-form input {
+    height: 50px;
+}
+
+.my-form textarea {
+    width: 300px;
+    height: 300px;
+}
+
+.my-form input,
+.my-form div,
+.my-form textarea {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

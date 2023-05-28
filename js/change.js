@@ -68,6 +68,10 @@ async function uploadImage() {
         body: imageData
     })
 
+
+
+
+    if (response.status == 201) {
     const response_json = await response.json() // post의 return값에서 변환한 이미지의 id 가져오기 
     const get_response = await fetch(`${backend_base_url}/change/${response_json}`, {
     }) // 변환한 이미지의 id를 이용해서 ChangePostView에 get요청
@@ -75,7 +79,11 @@ async function uploadImage() {
     console.log(get_response_json)
     const after_image = document.getElementById("after_image")
     after_image.setAttribute("src", `${backend_base_url}${get_response_json.after_image}`) // after_image html에 붙여넣기 
-
+    } else {
+        if (file == null) {
+            alert('파일을 올려주세요')
+        }
+    }
 }
 
 // 이미지 파일 변환
