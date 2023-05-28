@@ -68,21 +68,17 @@ async function uploadImage() {
         body: imageData
     })
 
-    // const response_json = await response.json() // post의 return값에서 변환한 이미지의 id 가져오기 
-    // const get_response = await fetch(`${backend_base_url}/change/${response_json}`, {
-    // }) // 변환한 이미지의 id를 이용해서 ChangePostView에 get요청
-    // const get_response_json = await get_response.json() // get요청에서 변환된 이미지 가져오기 
-    // console.log(get_response_json)
-    // const after_image = document.getElementById("after_image")
-    // after_image.setAttribute("src", `${backend_base_url}${get_response_json.after_image}`) // after_image html에 붙여넣기 
+
+
 
     if (response.status == 201) {
-        // 홈페이지에 after_image 띄우기
-        const getimages = await getImages()
-        const after_image = document.getElementById("after_image")
-        console.log(getimages)
-        after_image.setAttribute("src", `${backend_base_url}${getimages.after_image}`)
-        return response
+    const response_json = await response.json() // post의 return값에서 변환한 이미지의 id 가져오기 
+    const get_response = await fetch(`${backend_base_url}/change/${response_json}`, {
+    }) // 변환한 이미지의 id를 이용해서 ChangePostView에 get요청
+    const get_response_json = await get_response.json() // get요청에서 변환된 이미지 가져오기 
+    console.log(get_response_json)
+    const after_image = document.getElementById("after_image")
+    after_image.setAttribute("src", `${backend_base_url}${get_response_json.after_image}`) // after_image html에 붙여넣기 
     } else {
         if (file == null) {
             alert('파일을 올려주세요')
@@ -90,7 +86,7 @@ async function uploadImage() {
     }
 }
 
-// // 이미지 파일 변환
+// 이미지 파일 변환
 async function transferImage() {
     const beforeImg = document.getElementById("beforeImage").value
     const response = await fetch(`${backend_base_url}/change/`, {
@@ -108,6 +104,43 @@ async function transferImage() {
     }
 }
 
+
+//이미지 파일 저장
+async function downloadImage() {
+
+    const imageData = new FormData()
+    imageData.append("before_image", file)
+    const response = await fetch(`${backend_base_url}/change/`, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        },
+        method: 'POST',
+        body: imageData
+    })
+
+    const response_json = await response.json() // post의 return값에서 변환한 이미지의 id 가져오기 
+    const get_response = await fetch(`${backend_base_url}/change/${response_json}`, {
+    }) // 변환한 이미지의 id를 이용해서 ChangePostView에 get요청
+    const get_response_json = await get_response.json() // get요청에서 변환된 이미지 가져오기
+
+
+    axios({
+        url: `${backend_base_url}${get_response_json.after_image}`,
+        method: 'GET',
+        responseType: 'blob'
+    })
+        .then((response) => {
+            const url = window.URL
+                .createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'image.jpg');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+
+}
 
 
 
