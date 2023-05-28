@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 5%;
+    
 }
 
 .right-container {
@@ -9,10 +10,16 @@
 }
 
 .col {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    margin-right: auto;
+    /* margin-left: auto; */
+    /* position: relative; */
+    width: 350px;
+    height: 250px;
+    /* margin-right: auto; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .card {
@@ -31,4 +38,8 @@
 
 .btn-outline-secondary {
     margin-right: 1%;
+}
+
+.row {
+    justify-content: space-between;
 }
