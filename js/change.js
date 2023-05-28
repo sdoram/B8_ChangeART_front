@@ -68,6 +68,14 @@ async function uploadImage() {
         body: imageData
     })
 
+    // const response_json = await response.json() // post의 return값에서 변환한 이미지의 id 가져오기 
+    // const get_response = await fetch(`${backend_base_url}/change/${response_json}`, {
+    // }) // 변환한 이미지의 id를 이용해서 ChangePostView에 get요청
+    // const get_response_json = await get_response.json() // get요청에서 변환된 이미지 가져오기 
+    // console.log(get_response_json)
+    // const after_image = document.getElementById("after_image")
+    // after_image.setAttribute("src", `${backend_base_url}${get_response_json.after_image}`) // after_image html에 붙여넣기 
+
     if (response.status == 201) {
         // 홈페이지에 after_image 띄우기
         const getimages = await getImages()
