@@ -170,3 +170,10 @@ button:disabled,
     font-size: 30px;
     margin-bottom: 20px;
 }
+
+.sh_big_2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 20px;
+}
