@@ -17,3 +17,12 @@ function checkLogin() {
         window.location.replace(`${frontend_base_url}/`)
     }
 }
+
+// 로그인 여부에 따라 로그인 페이지 or 글작성 페이지
+function handleMoveCreate() {
+    if (payload) {
+        window.location.href = `${frontend_base_url}/doc/create.html`
+    } else {
+        window.location.href = `${frontend_base_url}/doc/login.html`
+    }
+}
