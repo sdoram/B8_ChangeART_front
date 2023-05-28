@@ -240,7 +240,7 @@ async function postComment(article_id, newComment) {
 
         return response_json
     } else {
-        alert(response.status)
+        alert("댓글 내용을 입력해주세요")
     }
 }
 // 댓글 수정모드
@@ -282,7 +282,7 @@ async function handleUpdateConfirm(comment_id) {
     if (response.status == 200) {
 
     } else {
-        alert(response.status)
+        alert("댓글 내용을 입력해주세요")
     }
 
     loadComments(article_id);

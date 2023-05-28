@@ -113,6 +113,6 @@ async function updateArticle() {
         alert("게시글이 수정되었습니다")
         window.history.back();
     } else {
-        alert(response.status)
+        alert("제목을 입력해주세요")
     }
 }
