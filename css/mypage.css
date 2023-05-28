@@ -21,6 +21,10 @@ button:disabled,
     color: rgba(160, 160, 160, 0.3) !important;
 }
 
+p {
+    margin-bottom: 0;
+}
+
 .sh_container {
     /* background-color: #4a256d; */
     display: flex;
@@ -28,7 +32,7 @@ button:disabled,
     padding: 130px 200px 0px 200px;
     width: fit-content;
     height: 800px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .sh_row {
@@ -144,17 +148,12 @@ button:disabled,
 }
 
 .sh_title {
-    font-size: 15px;
+    font-size: 13px;
     color: rgb(138, 138, 138);
-    margin-bottom: 8px;
 }
 
 .sh_content {
-    margin-left: 5px;
-}
-
-.sh_in {
-    margin-bottom: 10px;
+    margin-left: 3px;
 }
 
 .sh_profile_btn {
@@ -167,12 +166,12 @@ button:disabled,
 }
 
 .sh_big {
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 20px;
 }
 
 .sh_big_2 {
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 20px;
     border-bottom: 1px solid #eeeeee;
     padding-bottom: 20px;
